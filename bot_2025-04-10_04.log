@@ -1,0 +1,12 @@
+2025-04-10 12:58:09,668 - INFO - [Text] Получено сообщение: 🔊 Начать
+2025-04-10 12:58:15,203 - INFO - [Assistant] Ответ: Hello! How are you today? What would you like to talk about? 
+2025-04-10 12:58:39,694 - INFO - [Whisper] Распознано:  You know, I'm just testing my first chatbot. Could you correct my mistake?
+2025-04-10 12:58:43,586 - INFO - [Assistant] Ответ: Sure! Here's a corrected version of your sentence:
+
+"You know, I'm just testing my first chatbot. Could you correct my mistakes?"
+
+It's a small change—just making the word "mistake" plural. Is there anything else you'd like to practice or talk about?
+2025-04-10 12:59:05,870 - INFO - [Whisper] Распознано:  Do you mean that I should stay could you correct my mistake?
+2025-04-10 12:59:14,496 - INFO - [Assistant] Ответ: Certainly! The correct way to phrase that sentence would be: "Do you mean that I should stay?" 
+
+In your original sentence, it seems like "could you correct my mistake?" was accidentally combined with your question. If you have any more questions or need further corrections, feel free to ask!
