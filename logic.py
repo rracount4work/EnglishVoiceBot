@@ -9,12 +9,14 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from assistant_api import ask_assistant
+from logger import logging
 
 # Отключаем предупреждения Whisper
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # Загружаем модель Whisper один раз
 model = whisper.load_model("base")
+
 
 async def process_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_input = ""
@@ -27,11 +29,6 @@ async def process_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await voice.download_to_drive(ogg_path)
 
-        #subprocess.run([
-        #    "ffmpeg", "-y", "-i", ogg_path,
-        #   "-ar", "16000", "-ac", "1", wav_path
-        #], check=True)
-
         subprocess.run([
             "ffmpeg", "-y", "-i", ogg_path,
             "-ar", "16000", "-ac", "1", wav_path
@@ -40,6 +37,7 @@ async def process_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         result = model.transcribe(wav_path, language="en")
         user_input = result["text"]
         print(f"[Whisper] Распознано: {user_input}")
+        logging.info(f"[Whisper] Распознано: {user_input}")
 
         os.remove(ogg_path)
         os.remove(wav_path)
@@ -48,6 +46,7 @@ async def process_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Если текст — берём как есть
         user_input = update.message.text
         print(f"[Text] Получено сообщение: {user_input}")
+        logging.info(f"[Text] Получено сообщение: {user_input}")
 
     else:
         await update.message.reply_text("Пожалуйста, отправьте текст или голосовое сообщение.")
@@ -62,6 +61,9 @@ async def process_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Отправляем сообщение ассистенту
     response = await ask_assistant(user_input)
+    print(f"[Assistant] Ответ: {response}")
+    logging.info(f"[Assistant] Ответ: {response}")
+
     await update.message.reply_text(response)
 
     # Генерация голосового ответа
